@@ -19,6 +19,7 @@ body {
 
 /* Might be unnecessary */
 #spawn-area {
+    top: 0;
     border: 1px solid green;
     width: 1px;
     height: 1px;
@@ -33,13 +34,18 @@ body {
     height: 300px;
 }
 #play-area span {
+    top: 0;
     display: inline;
     position: absolute;
-    font-size: 2rem;
+    font-size: 3rem;
 }
 
 
 /* animations */
+/* .move-down {
+
+} */
+
 .moving-down {
     animation-name: down;
     animation-duration: 3s;
