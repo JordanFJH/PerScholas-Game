@@ -33,7 +33,8 @@ body {
     height: 300px;
 }
 #play-area span {
-    position: relative;
+    display: inline;
+    position: absolute;
     font-size: 2rem;
 }
 
@@ -41,7 +42,8 @@ body {
 /* animations */
 .moving-down {
     animation-name: down;
-    animation-duration: 4s;
+    animation-duration: 3s;
+    animation-timing-function: linear;
 }
 
 @keyframes down {
