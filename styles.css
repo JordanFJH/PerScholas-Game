@@ -6,11 +6,23 @@ body {
 }
 
 #play-area {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
     position: relative;
     top: 10%;
     border: 1px solid black;
     width: 40%;
     height: 70%;
+}
+
+/* Might be unnecessary */
+#spawn-area {
+    border: 1px solid green;
+    width: 1px;
+    height: 1px;
+    margin: auto;
 }
 
 #score-display {
@@ -19,4 +31,20 @@ body {
     top: 10%;
     width: 200px;
     height: 300px;
+}
+#play-area span {
+    position: relative;
+    font-size: 2rem;
+}
+
+
+/* animations */
+.moving-down {
+    animation-name: down;
+    animation-duration: 4s;
+}
+
+@keyframes down {
+    from {top: 0%;}
+    to {top: 100%;}
 }
