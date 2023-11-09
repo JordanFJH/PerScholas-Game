@@ -1,30 +1,25 @@
 //Global Variables
 let letterOptions = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 let displayedLetters = []
+let roundOver = false;
+let difficulty = -.5;
+let spawnDelay = 1000;
+let deleteSpeed = 0;
 let iterations = 0;
 let count = 0;
 let score = 0;
 let letterSpeed = 3;
+const body = document.querySelector("body");
 let playArea = document.querySelector("#play-area")
 let scoreDisplay = document.querySelector("#score-display");
 const spawnArea = document.querySelector("#spawn-area");
 
-class Letter {
-    constructor(letter) {
-        this.letter = randomLetter();
-    }
-    move() {
-        spot += .2;
-        spotter = spot + "%";
-        this.style.top = spotter;
-        if (spot < 100) {
-            requestAnimationFrame(move);
-        }
-        else {
-            thing.remove();
-        }
-    }
-}
+
+//Event listener for user click
+window.addEventListener("keypress", function (evt){
+    console.log(evt.key);
+})
+
 
 //Spawning the letter
 function letterCreator() {
@@ -53,32 +48,64 @@ function letterCreator() {
 // }
 
 
-const interval = setInterval(theCaller, 1000)
-
-// function daGame () {
-//     const interval = setInterval(theCaller, 1000)
-// }
+// const interval = setInterval(theCaller, 1000)
 
 
-function theCaller () {
-    iterations++
-    letterCreator();
-    if (iterations > 9){
-        clearInterval(interval);
+//Might be the function for the entire game
+function daGame () {
+    console.log("Letter speed: " + letterSpeed)
+    console.log("Spawn Delay: " + spawnDelay);
+    console.log("Delete Speed: " + deleteSpeed);
+    const interval = setInterval(theCaller, spawnDelay);
+
+
+
+
+    function theCaller () {
+        iterations++
+        if (iterations < 5){
+            letterCreator();
+        }else {
+            clearInterval(interval);
+            roundOver = true;
+            setTimeout(checkToContinue, 2000);
+        }
     }
+    
 }
 
 
 
-//Delay speed for set timeout in Letter Creator
+
+daGame();
+
+//Delay speed for set timeout in Letter Creator - Determines when it's deleted
 function delaySpeed () {
+    deleteSpeed = letterSpeed;
     if (letterSpeed - .2 <= 0){
-        return
+        return deleteSpeed;
     }else {
-        return (letterSpeed - .2) * 1000;
+        deleteSpeed = (letterSpeed - .2) * 1000;
+        return deleteSpeed;
     }
 }
 
+
+function checkToContinue() {
+    let answer = prompt("Would you like to coninue?").toLowerCase();
+    if (answer === "y"){
+        iterations = 0;
+        letterSpeed += difficulty;
+        spawnDelay += (difficulty * 200);
+        console.log("Current difficulty is " + difficulty);
+        daGame();
+    }else {
+        return;
+    }
+}
+
+
+//Selecting the random letter to be displayed
 function randomLetter() {
     let index;
     index = Math.floor(Math.random() * letterOptions.length);
@@ -88,6 +115,34 @@ function randomLetter() {
 function convertingLetterSpeed(number) {
     return number + "s";
 }
+
+function convertingLetterSpeed2 (number) {
+    return number + "seconds";
+}
+
+
+
+//TRASH
+
+
+
+// class Letter {
+//     constructor(letter) {
+//         this.letter = randomLetter();
+//     }
+//     move() {
+//         spot += .2;
+//         spotter = spot + "%";
+//         this.style.top = spotter;
+//         if (spot < 100) {
+//             requestAnimationFrame(move);
+//         }
+//         else {
+//             thing.remove();
+//         }
+//     }
+// }
+
 
 
 
