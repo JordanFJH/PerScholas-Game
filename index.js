@@ -1,8 +1,8 @@
 //Global Variables
 let letterOptions = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 let displayedLetters = []
-let spot = 0;
-let spotter;
+let iterations = 0;
+let count = 0;
 let score = 0;
 let letterSpeed = 3;
 let playArea = document.querySelector("#play-area")
@@ -34,23 +34,50 @@ function letterCreator() {
     setTimeout(() => {
         test.remove();
         displayedLetters.shift();
-        console.log(displayedLetters);
-    }, (letterSpeed - .2) * 1000);
+    }, delaySpeed());
     test.style.animationDuration = convertingLetterSpeed(letterSpeed);
     spawnArea.appendChild(test);
     displayedLetters.push(test);
-    console.log(displayedLetters);
+    count++;
+    console.log(`Number count:  ${count}`);
 }
-letterCreator();
-const interval = setInterval(letterCreator, 1000);
-clearInterval(interval);
+// letterCreator();
+// const interval = setInterval(letterCreator, 1000);
+// clearInterval(interval);
 
 
 
+// while (true){
+//     const interval = setInterval(letterCreator, 1000);
+//     letterSpeed -= .1;
+// }
+
+
+const interval = setInterval(theCaller, 1000)
+
+// function daGame () {
+//     const interval = setInterval(theCaller, 1000)
+// }
+
+
+function theCaller () {
+    iterations++
+    letterCreator();
+    if (iterations > 9){
+        clearInterval(interval);
+    }
+}
 
 
 
-
+//Delay speed for set timeout in Letter Creator
+function delaySpeed () {
+    if (letterSpeed - .2 <= 0){
+        return
+    }else {
+        return (letterSpeed - .2) * 1000;
+    }
+}
 
 function randomLetter() {
     let index;
