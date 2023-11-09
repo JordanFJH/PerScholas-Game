@@ -11,12 +11,18 @@ let count = 0;
 let score = 0;
 let letterSpeed = 3;
 const body = document.querySelector("body");
+const bounds = document.querySelector("#bounds");
 let playArea = document.querySelector("#play-area")
 let scoreDisplay = document.querySelector("#score-display");
 const spawnArea = document.querySelector("#spawn-area");
 
 
-// setInterval(checkMiss, 500);
+setInterval(checkMiss, 50);
+
+
+const rect = bounds.getBoundingClientRect();
+console.log(rect);
+
 
 window.addEventListener("focus", function (evt){
     missCount++;
@@ -95,7 +101,7 @@ function daGame () {
 }
 
 
-
+letterCreator();
 
 // daGame();
 
@@ -111,8 +117,17 @@ function delaySpeed () {
 }
 
 function checkMiss() {
-    missCount++;
-    console.log(missCount);
+    //Return if the Letters array is empty
+    if (displayedLetters.length === 0) {
+        return;
+    }
+    let letter = displayedLetters[0];
+    let rect2 = letter.getBoundingClientRect();
+    let killArea = rect.top;
+    if (rect2.top > killArea - 25){
+        console.log("You missed");
+        displayedLetters[0].remove();
+    }
 }
 
 function checkToContinue() {
