@@ -17,6 +17,15 @@ body {
     height: 70%;
 }
 
+#bounds {
+    background-color: red;
+    position: absolute;
+    bottom: 0;
+    border: 1px solid black;
+    width: 100%;
+    height: 5%;
+}
+
 /* Might be unnecessary */
 #spawn-area {
     top: 0;

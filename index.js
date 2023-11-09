@@ -4,6 +4,7 @@ let displayedLetters = []
 let roundOver = false;
 let difficulty = -.5;
 let spawnDelay = 1000;
+let missCount = 0;
 let deleteSpeed = 0;
 let iterations = 0;
 let count = 0;
@@ -15,9 +16,26 @@ let scoreDisplay = document.querySelector("#score-display");
 const spawnArea = document.querySelector("#spawn-area");
 
 
+// setInterval(checkMiss, 500);
+
+window.addEventListener("focus", function (evt){
+    missCount++;
+    console.log(missCount);
+})
+
+
+
 //Event listener for user click
 window.addEventListener("keypress", function (evt){
+    let userKey = evt.key;
+    let gameKey = this.document.querySelector("#spawn-area :first-child");
+    console.log(gameKey.innerText);
     console.log(evt.key);
+    console.log("Miss Count: " + missCount);
+    if (evt.key === gameKey.innerText){
+        console.log("This is the correct letter");
+        letterRemove(gameKey);
+    }
 })
 
 
@@ -35,6 +53,7 @@ function letterCreator() {
     displayedLetters.push(test);
     count++;
     console.log(`Number count:  ${count}`);
+    
 }
 // letterCreator();
 // const interval = setInterval(letterCreator, 1000);
@@ -56,11 +75,12 @@ function daGame () {
     console.log("Letter speed: " + letterSpeed)
     console.log("Spawn Delay: " + spawnDelay);
     console.log("Delete Speed: " + deleteSpeed);
+    console.log(missCount);
     const interval = setInterval(theCaller, spawnDelay);
 
 
 
-
+    //Used to call the letter generator
     function theCaller () {
         iterations++
         if (iterations < 5){
@@ -77,7 +97,7 @@ function daGame () {
 
 
 
-daGame();
+// daGame();
 
 //Delay speed for set timeout in Letter Creator - Determines when it's deleted
 function delaySpeed () {
@@ -90,6 +110,10 @@ function delaySpeed () {
     }
 }
 
+function checkMiss() {
+    missCount++;
+    console.log(missCount);
+}
 
 function checkToContinue() {
     let answer = prompt("Would you like to coninue?").toLowerCase();
@@ -104,6 +128,10 @@ function checkToContinue() {
     }
 }
 
+function letterRemove (key) {
+    key.remove()
+    displayedLetters.shift();
+}
 
 //Selecting the random letter to be displayed
 function randomLetter() {
