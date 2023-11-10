@@ -8,8 +8,9 @@ let missCount = 0;
 let deleteSpeed = 0;
 let iterations = 0;
 let count = 0;
-let score = 0;
+let points = 0;
 let letterSpeed = 3;
+const scoreRef = document.querySelector ("#score");
 const body = document.querySelector("body");
 const bounds = document.querySelector("#bounds");
 let playArea = document.querySelector("#play-area")
@@ -33,8 +34,7 @@ window.addEventListener("keypress", function (evt){
     console.log(evt.key);
     console.log("Miss Count: " + missCount);
     if (evt.key === gameKey.innerText){
-        console.log("This is the correct letter");
-        letterRemove(gameKey);
+        scoredPoint(gameKey);
     }
 })
 
@@ -60,13 +60,6 @@ function letterCreator() {
 // clearInterval(interval);
 
 
-
-// while (true){
-//     const interval = setInterval(letterCreator, 1000);
-//     letterSpeed -= .1;
-// }
-
-
 // const interval = setInterval(theCaller, 1000)
 
 
@@ -75,12 +68,11 @@ function gameStart () {
     console.log("Letter speed: " + letterSpeed)
     console.log("Spawn Delay: " + spawnDelay);
     console.log("Delete Speed: " + deleteSpeed);
-    console.log(missCount);
     const interval = setInterval(theCaller, spawnDelay);
 
 
 
-    //Used to call the letter generator
+    //Used to call the letter generator and implement an iteration count on set interval
     function theCaller () {
         iterations++
         if (iterations < 5){
@@ -88,7 +80,7 @@ function gameStart () {
         }else {
             clearInterval(interval);
             roundOver = true;
-            setTimeout(checkToContinue, 2000);
+            setTimeout(roundContinue, 2000);
         }
     }
     
@@ -96,7 +88,34 @@ function gameStart () {
 
 // gameStart();
 
+
+
+/*
+********************************************
+* 
+*FUNCTIONS
+*
+********************************************
+*/
+// let time = new Date().getTime();
+// console.log(time);
+
+console.log("Hello World")
+sleep(2000);
+console.log("Adios")
+
+
+
+// function to "pause" the program for given amount of time for better flow of game
+function sleep(miliseconds) {
+    let currenTime = new Date().getTime();
+    while (currenTime + miliseconds >= new Date().getTime()){
+
+    }
+}
+
 //Delay speed for set timeout in Letter Creator - Determines when it's deleted
+// Might need to change it to 1/3 or 2/3 of letter speed
 function delaySpeed () {
     deleteSpeed = letterSpeed;
     if (letterSpeed - .2 <= 0){
@@ -126,7 +145,7 @@ function checkMiss() {
     }
 }
 
-function checkToContinue() {
+function roundContinue() {
     let answer = prompt("Would you like to coninue?").toLowerCase();
     if (answer === "y"){
         iterations = 0;
@@ -137,6 +156,14 @@ function checkToContinue() {
     }else {
         return;
     }
+}
+
+//When a correct key is pressed, raise the score
+function scoredPoint (key) {
+    console.log("Correct key pressed")
+    points += 100;
+    scoreRef.innerText = points;
+    letterRemove(key);
 }
 
 function letterRemove (key) {
@@ -203,6 +230,23 @@ function convertingLetterSpeed2 (number) {
 
 // }
 // requestAnimationFrame(letterMove);
+
+
+
+// function roundContinue() {
+//     let answer = prompt("Would you like to coninue?").toLowerCase();
+//     if (answer === "y"){
+//         iterations = 0;
+//         letterSpeed += difficulty;
+//         spawnDelay += (difficulty * 200);
+//         console.log("Current difficulty is " + difficulty);
+//         daGame();
+//     }else {
+//         return;
+//     }
+// }
+
+
 
 
 
