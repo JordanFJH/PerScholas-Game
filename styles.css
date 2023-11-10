@@ -39,23 +39,39 @@ button {
     margin: auto;
 }
 
+#score-info {
+    position: relative;
+    top: 10%;
+    border: 1px solid black;
+    height: 70%;
+}
+
 #score-display {
     display: flex;
     align-items: center;
     flex-direction: column;
     position: relative;
     border: 1px solid black;
-    top: 10%;
     width: 200px;
-    height: 300px;
+    height: 200px;
 }
-#score-display h3 {
+#streak {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+}
+
+#score-info h3 {
     text-decoration: underline;
     font-size: 2rem;
     margin-top: 10px;
 }
 
-#score {
+#score-info h4 {
     position: absolute;
     top: auto;
     font-weight: bold;

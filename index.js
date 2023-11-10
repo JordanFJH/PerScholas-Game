@@ -12,6 +12,8 @@ let letterSpeed = 3;
 let missInterval;
 let spawnInterval;
 let spawnDelay = Math.floor((letterSpeed * 1000) / 3);
+let streakNumber = 0;
+const streakNumberEl = document.querySelector("#streak-number");
 const startButton = document.querySelector("button");
 const scoreRef = document.querySelector("#score");
 const body = document.querySelector("body");
@@ -43,11 +45,10 @@ window.addEventListener("keypress", function (evt) {
     }
     let userKey = evt.key;
     let gameKey = this.document.querySelector("#spawn-area :first-child");
-    console.log(gameKey.innerText);
-    console.log(evt.key);
-    console.log("Miss Count: " + missCount);
     if (evt.key === gameKey.innerText) {
         scoredPoint(gameKey);
+    } else {
+        updateStreak(false);
     }
 })
 
@@ -173,6 +174,7 @@ function checkMiss() {
     let killArea = rect.top;
     if (rect2.top > killArea - 25) {
         console.log("You missed");
+        updateStreak(false);
         missCount++;
         displayedLetters[0].remove();
         displayedLetters.shift();
@@ -191,6 +193,7 @@ function roundContinue() {
 //When a correct key is pressed, raise the score
 function scoredPoint(key) {
     console.log("Correct key pressed")
+    updateStreak(true);
     points += 100;
     scoreRef.innerText = points;
     letterRemove(key);
@@ -207,6 +210,11 @@ function randomLetter() {
     let index;
     index = Math.floor(Math.random() * letterOptions.length);
     return letterOptions[index];
+}
+
+function updateStreak (bool) {
+    bool === true ? streakNumber++ : streakNumber = 0;
+    streakNumberEl.innerText = streakNumber;
 }
 
 function convertingLetterSpeed(number) {
