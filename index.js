@@ -9,9 +9,11 @@ let iterations = 0;
 let count = 0;
 let points = 0;
 let letterSpeed = 3;
+let missInterval;
+let spawnInterval;
 let spawnDelay = Math.floor((letterSpeed * 1000) / 3);
 const startButton = document.querySelector("button");
-const scoreRef = document.querySelector ("#score");
+const scoreRef = document.querySelector("#score");
 const body = document.querySelector("body");
 const bounds = document.querySelector("#bounds");
 let playArea = document.querySelector("#play-area")
@@ -22,10 +24,10 @@ const spawnArea = document.querySelector("#spawn-area");
 // const missInterval = setInterval(checkMiss, 50);
 
 
-startButton.addEventListener("click", function(evt){
+startButton.addEventListener("click", function (evt) {
     console.log("Good Luck!")
     gameStart();
-    const missInterval = setInterval(checkMiss, 50);
+    missInterval = setInterval(checkMiss, 50);
 })
 
 
@@ -35,7 +37,7 @@ console.log(rect);
 
 
 //Event listener for user click
-window.addEventListener("keypress", function (evt){
+window.addEventListener("keypress", function (evt) {
     if (displayedLetters.length === 0) {
         return;
     }
@@ -44,7 +46,7 @@ window.addEventListener("keypress", function (evt){
     console.log(gameKey.innerText);
     console.log(evt.key);
     console.log("Miss Count: " + missCount);
-    if (evt.key === gameKey.innerText){
+    if (evt.key === gameKey.innerText) {
         scoredPoint(gameKey);
     }
 })
@@ -64,7 +66,7 @@ function letterCreator() {
     displayedLetters.push(test);
     count++;
     console.log(`Number count:  ${count}`);
-    
+
 }
 // letterCreator();
 // const interval = setInterval(letterCreator, 1000);
@@ -75,26 +77,26 @@ function letterCreator() {
 
 
 //Function to start the entire game
-function gameStart () {
+function gameStart() {
     console.log("Letter speed: " + letterSpeed)
     console.log("Spawn Delay: " + spawnDelay);
     console.log("Delete Speed: " + deleteSpeed);
-    const interval = setInterval(theCaller, spawnDelay);
+    spawnInterval = setInterval(theCaller, spawnDelay);
 
 
 
     //Used to call the letter generator and implement an iteration count on set interval
-    function theCaller () {
-        iterations++
-        if (iterations < 5){
-            letterCreator();
-        }else {
-            clearInterval(interval);
-            roundOver = true;
-            setTimeout(roundContinue, 2000);
-        }
-    }
-    
+    // function theCaller() {
+    //     iterations++
+    //     if (iterations < 5) {
+    //         letterCreator();
+    //     } else {
+    //         clearInterval(spawnInterval);
+    //         roundOver = true;
+    //         setTimeout(roundContinue, 2000);
+    //     }
+    // }
+
 }
 
 // gameStart();
@@ -116,8 +118,21 @@ function gameStart () {
 // console.log("Adios")
 
 
+function theCaller() {
+    iterations++
+    if (iterations < 5) {
+        letterCreator();
+    } else {
+        clearInterval(spawnInterval);
+        roundOver = true;
+        setTimeout(roundContinue, 2000);
+    }
+}
+
+
+
 //Adjusts the speed of each round
-function adjustSpeed () {
+function adjustSpeed() {
     letterSpeed = (letterSpeed - .2).toFixed(1);
     spawnDelay = Math.floor((letterSpeed * 1000) / 3);
 
@@ -127,7 +142,7 @@ function adjustSpeed () {
 // function to "pause" the program for given amount of time for better flow of game
 function sleep(miliseconds) {
     let currenTime = new Date().getTime();
-    while (currenTime + miliseconds >= new Date().getTime()){
+    while (currenTime + miliseconds >= new Date().getTime()) {
 
     }
 }
@@ -135,11 +150,11 @@ function sleep(miliseconds) {
 //Delay speed for set timeout in Letter Creator - Determines when it's deleted
 // Might need to change it to 1/3 or 2/3 of letter speed
 // Might be obsolete with the killzone active
-function delaySpeed () {
+function delaySpeed() {
     deleteSpeed = letterSpeed;
-    if (letterSpeed - .2 <= 0){
+    if (letterSpeed - .2 <= 0) {
         return deleteSpeed;
-    }else {
+    } else {
         deleteSpeed = (letterSpeed - .2) * 1000;
         return deleteSpeed;
     }
@@ -147,16 +162,16 @@ function delaySpeed () {
 
 function checkMiss() {
     //Return if there are no letters on the screen to match
-    if (displayedLetters.length === 0) {
-        return;
-    }
     if (missCount >= 3) {
         alert("Great Job!  Let's see how you did");
+    }
+    if (displayedLetters.length === 0) {
+        return;
     }
     let letter = displayedLetters[0];
     let rect2 = letter.getBoundingClientRect();
     let killArea = rect.top;
-    if (rect2.top > killArea - 25){
+    if (rect2.top > killArea - 25) {
         console.log("You missed");
         missCount++;
         displayedLetters[0].remove();
@@ -174,7 +189,7 @@ function roundContinue() {
 }
 
 //When a correct key is pressed, raise the score
-function scoredPoint (key) {
+function scoredPoint(key) {
     console.log("Correct key pressed")
     points += 100;
     scoreRef.innerText = points;
@@ -182,7 +197,7 @@ function scoredPoint (key) {
 }
 
 //Removes active letter that was pressed
-function letterRemove (key) {
+function letterRemove(key) {
     key.remove()
     displayedLetters.shift();
 }
@@ -198,7 +213,7 @@ function convertingLetterSpeed(number) {
     return number + "s";
 }
 
-function convertingLetterSpeed2 (number) {
+function convertingLetterSpeed2(number) {
     return number + "seconds";
 }
 
