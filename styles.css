@@ -17,6 +17,10 @@ body {
     height: 70%;
 }
 
+button {
+    position: absolute;
+}
+
 #bounds {
     background-color: red;
     position: absolute;

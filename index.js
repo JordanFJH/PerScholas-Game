@@ -3,13 +3,14 @@ let letterOptions = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
 let displayedLetters = []
 let roundOver = false;
 let difficulty = -.5;
-let spawnDelay = 1000;
 let missCount = 0;
 let deleteSpeed = 0;
 let iterations = 0;
 let count = 0;
 let points = 0;
 let letterSpeed = 3;
+let spawnDelay = Math.floor((letterSpeed * 1000) / 3);
+const startButton = document.querySelector("button");
 const scoreRef = document.querySelector ("#score");
 const body = document.querySelector("body");
 const bounds = document.querySelector("#bounds");
@@ -17,8 +18,15 @@ let playArea = document.querySelector("#play-area")
 let scoreDisplay = document.querySelector("#score-display");
 const spawnArea = document.querySelector("#spawn-area");
 
+//Constantly checking the window to see if there's a miss
+// const missInterval = setInterval(checkMiss, 50);
 
-setInterval(checkMiss, 50);
+
+startButton.addEventListener("click", function(evt){
+    console.log("Good Luck!")
+    gameStart();
+    const missInterval = setInterval(checkMiss, 50);
+})
 
 
 const rect = bounds.getBoundingClientRect();
@@ -28,6 +36,9 @@ console.log(rect);
 
 //Event listener for user click
 window.addEventListener("keypress", function (evt){
+    if (displayedLetters.length === 0) {
+        return;
+    }
     let userKey = evt.key;
     let gameKey = this.document.querySelector("#spawn-area :first-child");
     console.log(gameKey.innerText);
@@ -63,7 +74,7 @@ function letterCreator() {
 // const interval = setInterval(theCaller, 1000)
 
 
-//Might be the function for the entire game
+//Function to start the entire game
 function gameStart () {
     console.log("Letter speed: " + letterSpeed)
     console.log("Spawn Delay: " + spawnDelay);
@@ -100,10 +111,17 @@ function gameStart () {
 // let time = new Date().getTime();
 // console.log(time);
 
-console.log("Hello World")
-sleep(2000);
-console.log("Adios")
+// console.log("Hello World")
+// sleep(2000);
+// console.log("Adios")
 
+
+//Adjusts the speed of each round
+function adjustSpeed () {
+    letterSpeed = (letterSpeed - .2).toFixed(1);
+    spawnDelay = Math.floor((letterSpeed * 1000) / 3);
+
+}
 
 
 // function to "pause" the program for given amount of time for better flow of game
@@ -116,6 +134,7 @@ function sleep(miliseconds) {
 
 //Delay speed for set timeout in Letter Creator - Determines when it's deleted
 // Might need to change it to 1/3 or 2/3 of letter speed
+// Might be obsolete with the killzone active
 function delaySpeed () {
     deleteSpeed = letterSpeed;
     if (letterSpeed - .2 <= 0){
@@ -127,7 +146,7 @@ function delaySpeed () {
 }
 
 function checkMiss() {
-    //Return if the Letters array is empty
+    //Return if there are no letters on the screen to match
     if (displayedLetters.length === 0) {
         return;
     }
@@ -145,17 +164,13 @@ function checkMiss() {
     }
 }
 
+//Function to check each round and increment difficulty
 function roundContinue() {
-    let answer = prompt("Would you like to coninue?").toLowerCase();
-    if (answer === "y"){
-        iterations = 0;
-        letterSpeed += difficulty;
-        spawnDelay += (difficulty * 200);
-        console.log("Current difficulty is " + difficulty);
-        daGame();
-    }else {
-        return;
-    }
+    console.log("Get ready for the next round");
+    adjustSpeed(); //Makes the letters and spawn delay faster
+    sleep(2000); // Pauses the games between rounds
+    iterations = 0;
+    gameStart();
 }
 
 //When a correct key is pressed, raise the score
@@ -166,12 +181,13 @@ function scoredPoint (key) {
     letterRemove(key);
 }
 
+//Removes active letter that was pressed
 function letterRemove (key) {
     key.remove()
     displayedLetters.shift();
 }
 
-//Selecting the random letter to be displayed
+//Selecting the random letter to be displayed from the array
 function randomLetter() {
     let index;
     index = Math.floor(Math.random() * letterOptions.length);
