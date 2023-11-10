@@ -24,12 +24,6 @@ const rect = bounds.getBoundingClientRect();
 console.log(rect);
 
 
-window.addEventListener("focus", function (evt){
-    missCount++;
-    console.log(missCount);
-})
-
-
 
 //Event listener for user click
 window.addEventListener("keypress", function (evt){
@@ -50,10 +44,10 @@ function letterCreator() {
     let test = document.createElement("span")
     test.innerText = randomLetter();
     test.classList.add("moving-down");
-    setTimeout(() => {
-        test.remove();
-        displayedLetters.shift();
-    }, delaySpeed());
+    // setTimeout(() => {
+    //     test.remove();
+    //     displayedLetters.shift();
+    // }, delaySpeed());
     test.style.animationDuration = convertingLetterSpeed(letterSpeed);
     spawnArea.appendChild(test);
     displayedLetters.push(test);
@@ -77,7 +71,7 @@ function letterCreator() {
 
 
 //Might be the function for the entire game
-function daGame () {
+function gameStart () {
     console.log("Letter speed: " + letterSpeed)
     console.log("Spawn Delay: " + spawnDelay);
     console.log("Delete Speed: " + deleteSpeed);
@@ -100,10 +94,7 @@ function daGame () {
     
 }
 
-
-letterCreator();
-
-// daGame();
+// gameStart();
 
 //Delay speed for set timeout in Letter Creator - Determines when it's deleted
 function delaySpeed () {
@@ -121,12 +112,17 @@ function checkMiss() {
     if (displayedLetters.length === 0) {
         return;
     }
+    if (missCount >= 3) {
+        alert("Great Job!  Let's see how you did");
+    }
     let letter = displayedLetters[0];
     let rect2 = letter.getBoundingClientRect();
     let killArea = rect.top;
     if (rect2.top > killArea - 25){
         console.log("You missed");
+        missCount++;
         displayedLetters[0].remove();
+        displayedLetters.shift();
     }
 }
 

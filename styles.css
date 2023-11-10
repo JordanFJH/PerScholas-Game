@@ -35,12 +35,29 @@ body {
 }
 
 #score-display {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     position: relative;
     border: 1px solid black;
     top: 10%;
     width: 200px;
     height: 300px;
 }
+#score-display h3 {
+    text-decoration: underline;
+    font-size: 2rem;
+    margin-top: 10px;
+}
+
+#score {
+    position: absolute;
+    top: auto;
+    font-weight: bold;
+    font-size: 3rem;
+}
+
+
 #play-area span {
     top: 0;
     display: inline;
