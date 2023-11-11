@@ -194,7 +194,13 @@ function roundContinue() {
 
 //When a correct key is pressed, raise the score
 function scoredPoint(key) {
-    updateScore();
+    const rect = bounds.getBoundingClientRect();
+    let letter = displayedLetters[0];
+    let rect2 = letter.getBoundingClientRect();
+
+    let scoringPoints = Math.floor((Math.round(rect.top - rect2.top) / 2));
+    
+    updateScore(scoringPoints);
     updateStreak(true);
     letterRemove(key);
 }
@@ -224,8 +230,8 @@ function randomLetter() {
 }
 
 //Updates the score with the active streak bonus
-function updateScore() {
-    points += (streakNumber * 10) + 100;
+function updateScore(pointstoAdd) {
+    points += (streakNumber * 10) + pointstoAdd;
     scoreRef.innerText = points;
 }
 
