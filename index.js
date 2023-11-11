@@ -35,16 +35,7 @@ const spawnArea = document.querySelector("#spawn-area");
 
 //start button to start the game
 startButton.addEventListener("click", function (evt) {
-    missInterval = setInterval(checkMiss, missDelay);
-    console.log("Good Luck!")
-    roundNumebr = 1;
-    iterations = 0;
-    points = 0;
-    scoreRef.innerText = 0;
-    missCount = 0;
-    letterSpeed = 3;
-    spawnDelay = Math.floor((letterSpeed * 1000) / 3);
-    gameStatus = true;
+    gameInitialize();
     gameStart();
     
 })
@@ -214,11 +205,22 @@ function letterRemove(key) {
     displayedLetters.shift();
 }
 
-//Selecting the random letter to be displayed from the array
+//Selecting the random letter to be displayed for the player to press
 function randomLetter() {
+    let pickedChar;
+    let chosenChar;
     let index;
-    index = Math.floor(Math.random() * letterOptions.length);
-    return letterOptions[index];
+    let randomNum = Math.round(Math.random());
+    if (roundNumebr <= 3) {
+        index = Math.floor(Math.random() * letterOptions.length);
+        pickedChar = letterOptions[index];
+        chosenChar = pickedChar
+    } else if (roundNumebr >= 4){
+        index = Math.floor(Math.random() * letterOptions.length);
+        pickedChar = letterOptions[index];
+        randomNum === 1 ? chosenChar = pickedChar : chosenChar = pickedChar.toUpperCase();
+    }
+    return chosenChar;
 }
 
 //Updates the score with the active streak bonus
@@ -253,6 +255,20 @@ function updateHighScores(userPoints) {
             newLow = lowest;
         }
     }
+}
+
+function gameInitialize(){
+    missInterval = setInterval(checkMiss, missDelay);
+    console.log("Good Luck!")
+    roundNumebr = 1;
+    roundEl.innerText = roundNumebr;
+    iterations = 0;
+    points = 0;
+    scoreRef.innerText = 0;
+    missCount = 0;
+    letterSpeed = 3;
+    spawnDelay = Math.floor((letterSpeed * 1000) / 3);
+    gameStatus = true;
 }
 
 
