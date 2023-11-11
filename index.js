@@ -1,5 +1,6 @@
 //Global Variables
 let letterOptions = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+let specialChars = ["!", "@", "#", "$", "%", "&", "*", "(", ")", "=", "+", "?", ">", "<", ".", ",", ":", ";", "[", "]", "{", "}"]
 let displayedLetters = []
 let roundOver = false;
 let difficulty = -.5;
@@ -29,12 +30,8 @@ const spawnArea = document.querySelector("#spawn-area");
 startButton.addEventListener("click", function (evt) {
     console.log("Good Luck!")
     gameStart();
-    missInterval = setInterval(checkMiss, 50);
+    missInterval = setInterval(checkMiss, 30);
 })
-
-
-const rect = bounds.getBoundingClientRect();
-console.log(rect);
 
 
 
@@ -55,16 +52,12 @@ window.addEventListener("keypress", function (evt) {
 
 //Spawning the letter
 function letterCreator() {
-    let test = document.createElement("span")
-    test.innerText = randomLetter();
-    test.classList.add("moving-down");
-    // setTimeout(() => {
-    //     test.remove();
-    //     displayedLetters.shift();
-    // }, delaySpeed());
-    test.style.animationDuration = convertingLetterSpeed(letterSpeed);
-    spawnArea.appendChild(test);
-    displayedLetters.push(test);
+    let letter = document.createElement("span")
+    letter.innerText = randomLetter();
+    letter.classList.add("moving-down");
+    letter.style.animationDuration = convertingLetterSpeed(letterSpeed);
+    spawnArea.appendChild(letter);
+    displayedLetters.push(letter);
     count++;
     console.log(`Number count:  ${count}`);
 
@@ -83,24 +76,7 @@ function gameStart() {
     console.log("Spawn Delay: " + spawnDelay);
     console.log("Delete Speed: " + deleteSpeed);
     spawnInterval = setInterval(theCaller, spawnDelay);
-
-
-
-    //Used to call the letter generator and implement an iteration count on set interval
-    // function theCaller() {
-    //     iterations++
-    //     if (iterations < 5) {
-    //         letterCreator();
-    //     } else {
-    //         clearInterval(spawnInterval);
-    //         roundOver = true;
-    //         setTimeout(roundContinue, 2000);
-    //     }
-    // }
-
 }
-
-// gameStart();
 
 
 
@@ -161,14 +137,17 @@ function delaySpeed() {
     }
 }
 
+//Checks if a letter reaches the killzone and counts it as a miss
 function checkMiss() {
-    //Return if there are no letters on the screen to match
+    //Ends game if 3 misses
     if (missCount >= 3) {
         alert("Great Job!  Let's see how you did");
     }
+    //Return if there are no letters on the screen to match
     if (displayedLetters.length === 0) {
         return;
     }
+    const rect = bounds.getBoundingClientRect();
     let letter = displayedLetters[0];
     let rect2 = letter.getBoundingClientRect();
     let killArea = rect.top;
@@ -192,10 +171,8 @@ function roundContinue() {
 
 //When a correct key is pressed, raise the score
 function scoredPoint(key) {
-    console.log("Correct key pressed")
+    updateScore();
     updateStreak(true);
-    points += 100;
-    scoreRef.innerText = points;
     letterRemove(key);
 }
 
@@ -212,6 +189,13 @@ function randomLetter() {
     return letterOptions[index];
 }
 
+function updateScore() {
+    points += (streakNumber * 10) + 100;
+    scoreRef.innerText = points;
+}
+
+
+//Updates the active streak number depending on if player hits, misses, or gusess wrong letter
 function updateStreak (bool) {
     bool === true ? streakNumber++ : streakNumber = 0;
     streakNumberEl.innerText = streakNumber;
