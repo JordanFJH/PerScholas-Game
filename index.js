@@ -5,13 +5,14 @@ let displayedLetters = []
 let roundOver = false;
 let gameStatus = true;
 let difficulty = -.5;
-let missCount = 0;
+let missCount;
+let missDelay = 30;
 let deleteSpeed = 0;
-let iterations = 0;
+let iterations;
 let count = 0;
-let points = 0;
-let roundNumebr = 1;
-let letterSpeed = 3;
+let points;
+let roundNumebr;
+let letterSpeed;
 let missInterval;
 let spawnInterval;
 let spawnDelay = Math.floor((letterSpeed * 1000) / 3);
@@ -27,16 +28,25 @@ let playArea = document.querySelector("#play-area")
 let scoreDisplay = document.querySelector("#score-display");
 const spawnArea = document.querySelector("#spawn-area");
 
-console.log(highScores);
 //Constantly checking the window to see if there's a miss
 // const missInterval = setInterval(checkMiss, 50);
 
 
+
+//start button to start the game
 startButton.addEventListener("click", function (evt) {
+    missInterval = setInterval(checkMiss, missDelay);
     console.log("Good Luck!")
+    roundNumebr = 1;
+    iterations = 0;
+    points = 0;
+    scoreRef.innerText = 0;
+    missCount = 0;
+    letterSpeed = 3;
+    spawnDelay = Math.floor((letterSpeed * 1000) / 3);
     gameStatus = true;
     gameStart();
-    missInterval = setInterval(checkMiss, 30);
+    
 })
 
 
@@ -81,8 +91,10 @@ function gameStart() {
     if (gameStatus){
         console.log("Letter speed: " + letterSpeed)
         console.log("Spawn Delay: " + spawnDelay);
-        console.log("Delete Speed: " + deleteSpeed);
         spawnInterval = setInterval(theCaller, spawnDelay);
+        console.log("Miss interval started")
+    } else {
+        console.log("Game ended, can't start");
     }
     
 }
@@ -149,9 +161,14 @@ function delaySpeed() {
 //Checks if a letter reaches the killzone and counts it as a miss
 function checkMiss() {
     //Ends game if 3 misses
-    if (missCount >= 3) {
-        gameOver();
+    if (!gameStatus){
+        console.log("game not started");
         return;
+    }
+    if (missCount == 3) {
+        clearInterval(missInterval);
+        console.log("Miss interval cleared");
+        gameOver();
     }
     //Return if there are no letters on the screen to match
     if (displayedLetters.length === 0) {
@@ -225,16 +242,33 @@ function convertingLetterSpeed2(number) {
     return number + "seconds";
 }
 
+//Updates the highscores in a sorting order
+function updateHighScores(userPoints) {
+    let lowest;
+    let newLow = userPoints;
+    for (let i = 0; i < highScores.length; i++){
+        if (newLow > highScores[i].innerText){
+            lowest = highScores[i].innerText;
+            highScores[i].innerText = newLow;
+            newLow = lowest;
+        }
+    }
+}
+
+
 //The game over function for when the game is over
 function gameOver() {
     gameStatus = false;
     console.log("The game is over")
     clearInterval(spawnInterval);
-    clearInterval(missInterval);
     for (let letter of displayedLetters) {
         letter.remove();
+        displayedLetters.shift();
         console.log("Letter removed")
     }
+    
+    
+    updateHighScores(points)
 }
 
 
