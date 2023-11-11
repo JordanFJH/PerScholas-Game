@@ -3,17 +3,21 @@ let letterOptions = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
 let specialChars = ["!", "@", "#", "$", "%", "&", "*", "(", ")", "=", "+", "?", ">", "<", ".", ",", ":", ";", "[", "]", "{", "}"]
 let displayedLetters = []
 let roundOver = false;
+let gameStatus = true;
 let difficulty = -.5;
 let missCount = 0;
 let deleteSpeed = 0;
 let iterations = 0;
 let count = 0;
 let points = 0;
+let roundNumebr = 1;
 let letterSpeed = 3;
 let missInterval;
 let spawnInterval;
 let spawnDelay = Math.floor((letterSpeed * 1000) / 3);
 let streakNumber = 0;
+const highScores = document.querySelectorAll("#high-scores-container span");
+const roundEl = document.querySelector("#round-holder h4");
 const streakNumberEl = document.querySelector("#streak-number");
 const startButton = document.querySelector("button");
 const scoreRef = document.querySelector("#score");
@@ -23,12 +27,14 @@ let playArea = document.querySelector("#play-area")
 let scoreDisplay = document.querySelector("#score-display");
 const spawnArea = document.querySelector("#spawn-area");
 
+console.log(highScores);
 //Constantly checking the window to see if there's a miss
 // const missInterval = setInterval(checkMiss, 50);
 
 
 startButton.addEventListener("click", function (evt) {
     console.log("Good Luck!")
+    gameStatus = true;
     gameStart();
     missInterval = setInterval(checkMiss, 30);
 })
@@ -72,10 +78,13 @@ function letterCreator() {
 
 //Function to start the entire game
 function gameStart() {
-    console.log("Letter speed: " + letterSpeed)
-    console.log("Spawn Delay: " + spawnDelay);
-    console.log("Delete Speed: " + deleteSpeed);
-    spawnInterval = setInterval(theCaller, spawnDelay);
+    if (gameStatus){
+        console.log("Letter speed: " + letterSpeed)
+        console.log("Spawn Delay: " + spawnDelay);
+        console.log("Delete Speed: " + deleteSpeed);
+        spawnInterval = setInterval(theCaller, spawnDelay);
+    }
+    
 }
 
 
@@ -141,7 +150,8 @@ function delaySpeed() {
 function checkMiss() {
     //Ends game if 3 misses
     if (missCount >= 3) {
-        alert("Great Job!  Let's see how you did");
+        gameOver();
+        return;
     }
     //Return if there are no letters on the screen to match
     if (displayedLetters.length === 0) {
@@ -162,11 +172,16 @@ function checkMiss() {
 
 //Function to check each round and increment difficulty
 function roundContinue() {
-    console.log("Get ready for the next round");
-    adjustSpeed(); //Makes the letters and spawn delay faster
-    sleep(2000); // Pauses the games between rounds
-    iterations = 0;
-    gameStart();
+    if (gameStatus) {
+        roundNumebr++;
+        roundEl.innerText = roundNumebr;
+        console.log("Get ready for the next round");
+        adjustSpeed(); //Makes the letters and spawn delay faster
+        sleep(2000); // Pauses the games between rounds
+        iterations = 0;
+        gameStart();
+    }
+    
 }
 
 //When a correct key is pressed, raise the score
@@ -189,6 +204,7 @@ function randomLetter() {
     return letterOptions[index];
 }
 
+//Updates the score with the active streak bonus
 function updateScore() {
     points += (streakNumber * 10) + 100;
     scoreRef.innerText = points;
@@ -207,6 +223,18 @@ function convertingLetterSpeed(number) {
 
 function convertingLetterSpeed2(number) {
     return number + "seconds";
+}
+
+//The game over function for when the game is over
+function gameOver() {
+    gameStatus = false;
+    console.log("The game is over")
+    clearInterval(spawnInterval);
+    clearInterval(missInterval);
+    for (let letter of displayedLetters) {
+        letter.remove();
+        console.log("Letter removed")
+    }
 }
 
 
