@@ -26,7 +26,7 @@ button {
 }
 
 #bounds {
-    background-color: red;
+    background-color: green;
     position: absolute;
     bottom: 0;
     border: 1px solid black;
@@ -49,11 +49,12 @@ button {
     justify-content: space-between;
     position: relative;
     top: 10%;
-    border: 1px solid black;
     height: 70%;
+    padding-right: 20px;
 }
 
 .holder {
+    background-color: white;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -61,6 +62,7 @@ button {
     width: 200px;
     height: 200px;
     border: 1px solid black;
+    border-radius: 20px;
 }
 #score-info h3 {
     text-decoration: underline;
@@ -83,8 +85,13 @@ button {
     position: relative;
     top: 10%;
     border: 1px solid black;
+    border-radius: 20px;
     width: 15%;
     height: 70%;
+}
+
+#high-scores-container span {
+    color: darkgreen;
 }
 
 
@@ -104,7 +111,30 @@ button {
     animation-timing-function: linear;
 }
 
+.moving-down-2{
+    animation-name: down, side;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-direction: alternate;
+}
+
 @keyframes down {
     from {top: 0%;}
     to {top: 100%;}
+}
+
+
+
+/* .moving-side {
+    animation-name: side;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+} */
+
+@keyframes side {
+    from {left: 20%}
+    50% {left: 80%;}
+    to {left: 20%;}
 }

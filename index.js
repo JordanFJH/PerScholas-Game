@@ -61,7 +61,12 @@ window.addEventListener("keypress", function (evt) {
 function letterCreator() {
     let letter = document.createElement("span")
     letter.innerText = randomLetter();
-    letter.classList.add("moving-down");
+    if (roundNumebr <= 6) {
+        letter.classList.add("moving-down")
+    } else {
+        let randNum = Math.round(Math.random());
+        randNum == 1 ? letter.classList.add("moving-down") : letter.classList.add("moving-down-2");
+    }
     letter.style.animationDuration = convertingLetterSpeed(letterSpeed);
     spawnArea.appendChild(letter);
     displayedLetters.push(letter);
@@ -107,6 +112,7 @@ function gameStart() {
 // console.log("Adios")
 
 
+// Controls the iterations of number of letters displayed each roound
 function theCaller() {
     iterations++
     if (iterations < 5) {
@@ -123,7 +129,7 @@ function theCaller() {
 //Adjusts the speed of each round
 function adjustSpeed() {
     letterSpeed = (letterSpeed - .2).toFixed(1);
-    spawnDelay = Math.floor((letterSpeed * 1000) / 3);
+    spawnDelay = Math.floor((letterSpeed * 1000) / 4);
 
 }
 
@@ -221,7 +227,7 @@ function randomLetter() {
         index = Math.floor(Math.random() * letterOptions.length);
         pickedChar = letterOptions[index];
         chosenChar = pickedChar
-    } else if (roundNumebr >= 4){
+    } else if (roundNumebr >= 4){ //Adds capital letters after round 3
         index = Math.floor(Math.random() * letterOptions.length);
         pickedChar = letterOptions[index];
         randomNum === 1 ? chosenChar = pickedChar : chosenChar = pickedChar.toUpperCase();
