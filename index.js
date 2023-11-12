@@ -32,7 +32,6 @@ const spawnArea = document.querySelector("#spawn-area");
 // const missInterval = setInterval(checkMiss, 50);
 
 
-
 //start button to start the game
 startButton.addEventListener("click", function (evt) {
     gameInitialize();
@@ -178,9 +177,25 @@ function checkMiss() {
     if (rect2.top > killArea - 25) {
         console.log("You missed");
         updateStreak(false);
+        loseLife();
         missCount++;
         displayedLetters[0].remove();
         displayedLetters.shift();
+    }
+}
+
+function loseLife() {
+    let lastLife = document.querySelector("#bounds :last-child");
+    lastLife.classList.add("vaporize");
+    setTimeout(function () {
+        lastLife.remove();
+    }, 500)
+}
+
+function makeLives() {
+    for (let i = 0; i < 3; i++) {
+        let life = document.createElement("div")
+        bounds.appendChild(life);
     }
 }
 
@@ -272,6 +287,7 @@ function updateHighScores(userPoints) {
 function gameInitialize(){
     missInterval = setInterval(checkMiss, missDelay);
     console.log("Good Luck!")
+    makeLives();
     roundNumebr = 1;
     roundEl.innerText = roundNumebr;
     iterations = 0;
