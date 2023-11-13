@@ -62,9 +62,12 @@ function letterCreator() {
     letter.innerText = randomLetter();
     if (roundNumber <= 6) { //Adds seperate class of moving side to increase difficulty after certain round
         letter.classList.add("moving-down")
-    } else {
+    } else if (roundNumber <= 9){
         let randNum = Math.round(Math.random());
         randNum == 1 ? letter.classList.add("moving-down") : letter.classList.add("moving-down-2");
+    } else {
+        let randNum = Math.round(Math.random());
+        randNum == 1 ? letter.classList.add("moving-down-3") : letter.classList.add("moving-down-2");
     }
     letter.style.animationDuration = convertingLetterSpeed(letterSpeed);
     spawnArea.appendChild(letter);
@@ -127,7 +130,7 @@ function theCaller() {
 
 //Adjusts the speed of each round
 function adjustSpeed() {
-    letterSpeed = (letterSpeed - .2).toFixed(1);
+    letterSpeed = (letterSpeed - .1).toFixed(1);
     spawnDelay = Math.floor((letterSpeed * 1000) / 4);
 
 }
@@ -209,6 +212,7 @@ function roundContinue() {
         console.log("Get ready for the next round");
         adjustSpeed(); //Makes the letters and spawn delay faster
         sleep(1500); // Pauses the games between rounds
+        playNextlevel();
         iterations = 0;
         roundAnimate();
         gameStart();
@@ -239,8 +243,13 @@ function scoredPoint(key) {
 
 //Plays explosion sound effect for guessing the correct letter
 function playExplosion () {
-    // let audio = new Audio("Resources\Audio\Retro_Explosion.wav")
     let audio = new Audio("../Resources/Audio/Retro_Explosionn.wav")
+    audio.play();
+}
+
+//Plays next level sound for player making it to the next level
+function playNextlevel() {
+    let audio = new Audio("../Resources/Audio/Next_level.wav");
     audio.play();
 }
 

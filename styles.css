@@ -157,6 +157,12 @@ button {
     animation-direction: alternate;
 }
 
+.moving-down-3 {
+    animation: down 3s, rotate 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
 @keyframes down {
     from {top: 0%;}
     to {top: 100%;}
@@ -166,6 +172,15 @@ button {
     from {left: 20%}
     50% {left: 80%;}
     to {left: 20%;}
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* For getting rid of visualizer of life when player misses */
