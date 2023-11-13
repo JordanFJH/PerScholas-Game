@@ -27,9 +27,12 @@ const bounds = document.querySelector("#bounds");
 let playArea = document.querySelector("#play-area")
 let scoreDisplay = document.querySelector("#score-display");
 const spawnArea = document.querySelector("#spawn-area");
+const endScreen = document.querySelector("#end-screen");
 
 //Constantly checking the window to see if there's a miss
 // const missInterval = setInterval(checkMiss, 50);
+
+
 
 //start button to start the game
 startButton.addEventListener("click", function (evt) {
@@ -60,15 +63,6 @@ function letterCreator() {
     let letter = document.createElement("span")
     letter.innerText = randomLetter();
     letter.classList.add(chooseClass());
-    if (roundNumber <= 6) { //Adds seperate class of moving side to increase difficulty after certain round
-        letter.classList.add("moving-down")
-    } else if (roundNumber <= 10){
-        let randNum = Math.round(Math.random());
-        randNum == 1 ? letter.classList.add("moving-down") : letter.classList.add("moving-down-2");
-    } else {
-        let randNum = Math.round(Math.random());
-        randNum == 1 ? letter.classList.add("moving-down-3") : letter.classList.add("moving-down-2");
-    }
     letter.style.animationDuration = convertingLetterSpeed(letterSpeed);
     spawnArea.appendChild(letter);
     displayedLetters.push(letter);
@@ -388,7 +382,6 @@ function gameInitialize(){
 function gameOver() {
     gameStatus = false;
     console.log("The game is over")
-    console.log(displayedLetters)
     //first wave of deleting all the letters, combined with another for loop, working for now
     for (let i = 0; i < displayedLetters.length; i++){
         displayedLetters[0].remove();
@@ -401,7 +394,6 @@ function gameOver() {
         letter.remove();
         console.log("Letter removed")
     }
-    console.log(displayedLetters)
     clearInterval(spawnInterval);
     updateHighScores(points)
 }
