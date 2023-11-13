@@ -31,7 +31,6 @@ const spawnArea = document.querySelector("#spawn-area");
 //Constantly checking the window to see if there's a miss
 // const missInterval = setInterval(checkMiss, 50);
 
-
 //start button to start the game
 startButton.addEventListener("click", function (evt) {
     gameInitialize();
@@ -60,9 +59,10 @@ window.addEventListener("keypress", function (evt) {
 function letterCreator() {
     let letter = document.createElement("span")
     letter.innerText = randomLetter();
+    letter.classList.add(chooseClass());
     if (roundNumber <= 6) { //Adds seperate class of moving side to increase difficulty after certain round
         letter.classList.add("moving-down")
-    } else if (roundNumber <= 9){
+    } else if (roundNumber <= 10){
         let randNum = Math.round(Math.random());
         randNum == 1 ? letter.classList.add("moving-down") : letter.classList.add("moving-down-2");
     } else {
@@ -130,7 +130,7 @@ function theCaller() {
 
 //Adjusts the speed of each round
 function adjustSpeed() {
-    letterSpeed = (letterSpeed - .1).toFixed(1);
+    letterSpeed = (letterSpeed - .15).toFixed(2);
     spawnDelay = Math.floor((letterSpeed * 1000) / 4);
 
 }
@@ -155,6 +155,50 @@ function delaySpeed() {
         deleteSpeed = (letterSpeed - .2) * 1000;
         return deleteSpeed;
     }
+}
+
+//Chooses the random class that effects the difficulty of the letter going down
+function chooseClass() {
+    let chosenClass = "";
+    if (roundNumber <= 6) { //Adds seperate class of moving side to increase difficulty after certain round
+        chosenClass = "moving-down";
+    } else if (roundNumber <= 10){
+        let randNum = Math.round(Math.random() * 2);
+        switch (randNum) {
+            case 0:
+                chosenClass = "moving-down";
+                break;
+            case 1:
+                chosenClass = "moving-down-2";
+                break;
+            case 2:
+                chosenClass = "moving-down-2-2";
+                break;
+            default:
+                console.log("something went wrong in chooseClass");
+                break;
+        }
+    } else {
+        let randNum = Math.round(Math.random() * 3);
+        switch (randNum) {
+            case 0:
+                chosenClass = "moving-down";
+                break;
+            case 1:
+                chosenClass = "moving-down-2";
+                break;
+            case 2:
+                chosenClass = "moving-down-2";
+                break;
+            case 3:
+                chosenClass = "moving-down-3";
+                break;
+            default:
+                console.log("something went wrong in chooseClass");
+                break;
+        }
+    }
+    return chosenClass;
 }
 
 //Checks if a letter reaches the killzone and counts it as a miss
@@ -191,6 +235,8 @@ function checkMiss() {
 function loseLife() {
     let lastLife = document.querySelector("#bounds :last-child");
     lastLife.classList.add("vaporize");
+    let audio = new Audio ("../Resources/Audio/Life_Lost.wav")
+    audio.play();
     setTimeout(function () {
         lastLife.remove();
     }, 151)
