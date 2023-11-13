@@ -153,10 +153,12 @@ button {
     to {left: 20%;}
 }
 
+/* For getting rid of visualizer of life when player misses */
 .vaporize {
     animation-name: vaporize;
-    animation-duration: 250ms;
+    animation-duration: 150ms;
 }
+
 
 @keyframes vaporize {
     from {
@@ -170,12 +172,14 @@ button {
     }
 }
 
+/* Adds pizazz to the round number when player reaches next round */
 .fading {
     animation-name: fade;
     animation-duration: 200ms;
     animation-timing-function: linear;
-    animation-iteration-count: 6;
+    animation-iteration-count: infinite;
     animation-direction: alternate;
+    animation-play-state: paused;
 }
 
 @keyframes fade {

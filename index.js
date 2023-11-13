@@ -11,7 +11,7 @@ let deleteSpeed = 0;
 let iterations;
 let count = 0;
 let points;
-let roundNumebr;
+let roundNumber;
 let letterSpeed;
 let missInterval;
 let spawnInterval;
@@ -60,7 +60,7 @@ window.addEventListener("keypress", function (evt) {
 function letterCreator() {
     let letter = document.createElement("span")
     letter.innerText = randomLetter();
-    if (roundNumebr <= 6) { //Adds seperate class of moving side to increase difficulty after certain round
+    if (roundNumber <= 6) { //Adds seperate class of moving side to increase difficulty after certain round
         letter.classList.add("moving-down")
     } else {
         let randNum = Math.round(Math.random());
@@ -190,7 +190,7 @@ function loseLife() {
     lastLife.classList.add("vaporize");
     setTimeout(function () {
         lastLife.remove();
-    }, 250)
+    }, 151)
 }
 
 //Creates the visuals for the 3 lives during game initialize
@@ -204,17 +204,23 @@ function makeLives() {
 //Function to check each round and increment difficulty
 function roundContinue() {
     if (gameStatus) {
-        roundNumebr++;
-        roundEl.innerText = roundNumebr;
-        roundEl.classList.remove("fading");
-        roundEl.classList.add("fading");
+        roundNumber++;
+        roundEl.innerText = roundNumber;
         console.log("Get ready for the next round");
         adjustSpeed(); //Makes the letters and spawn delay faster
         sleep(1500); // Pauses the games between rounds
         iterations = 0;
+        roundAnimate();
         gameStart();
     }
     
+}
+
+function roundAnimate () {
+    roundEl.style.animationPlayState = "running";
+    setTimeout(function () {
+        roundEl.style.animationPlayState = "paused";
+    }, 800)
 }
 
 //When a correct key is pressed, raise the score
@@ -242,11 +248,11 @@ function randomLetter() {
     let chosenChar;
     let index;
     let randomNum = Math.round(Math.random());
-    if (roundNumebr <= 3) {
+    if (roundNumber <= 3) {
         index = Math.floor(Math.random() * letterOptions.length);
         pickedChar = letterOptions[index];
         chosenChar = pickedChar
-    } else if (roundNumebr >= 4){ //Adds capital letters after round 3
+    } else if (roundNumber >= 4){ //Adds capital letters after round 3
         index = Math.floor(Math.random() * letterOptions.length);
         pickedChar = letterOptions[index];
         randomNum === 1 ? chosenChar = pickedChar : chosenChar = pickedChar.toUpperCase();
@@ -292,8 +298,8 @@ function gameInitialize(){
     missInterval = setInterval(checkMiss, missDelay);
     console.log("Good Luck!")
     makeLives();
-    roundNumebr = 1;
-    roundEl.innerText = roundNumebr;
+    roundNumber = 1;
+    roundEl.innerText = roundNumber;
     iterations = 0;
     points = 0;
     scoreRef.innerText = 0;
