@@ -41,7 +41,7 @@ startButton.addEventListener("click", function (evt) {
 
 
 
-//Event listener for user click
+//Event listener for player pressing the key and matching it to the correct letter
 window.addEventListener("keypress", function (evt) {
     if (displayedLetters.length === 0) {
         return;
@@ -60,7 +60,7 @@ window.addEventListener("keypress", function (evt) {
 function letterCreator() {
     let letter = document.createElement("span")
     letter.innerText = randomLetter();
-    if (roundNumebr <= 6) {
+    if (roundNumebr <= 6) { //Adds seperate class of moving side to increase difficulty after certain round
         letter.classList.add("moving-down")
     } else {
         let randNum = Math.round(Math.random());
@@ -119,7 +119,7 @@ function theCaller() {
     } else {
         clearInterval(spawnInterval);
         roundOver = true;
-        setTimeout(roundContinue, 2000);
+        setTimeout(roundContinue, 2100);
     }
 }
 
@@ -184,14 +184,16 @@ function checkMiss() {
     }
 }
 
+//Deletes a visual of the life when the player doesn't hit a letter in time
 function loseLife() {
     let lastLife = document.querySelector("#bounds :last-child");
     lastLife.classList.add("vaporize");
     setTimeout(function () {
         lastLife.remove();
-    }, 500)
+    }, 250)
 }
 
+//Creates the visuals for the 3 lives during game initialize
 function makeLives() {
     for (let i = 0; i < 3; i++) {
         let life = document.createElement("div")
@@ -204,9 +206,11 @@ function roundContinue() {
     if (gameStatus) {
         roundNumebr++;
         roundEl.innerText = roundNumebr;
+        roundEl.classList.remove("fading");
+        roundEl.classList.add("fading");
         console.log("Get ready for the next round");
         adjustSpeed(); //Makes the letters and spawn delay faster
-        sleep(2000); // Pauses the games between rounds
+        sleep(1500); // Pauses the games between rounds
         iterations = 0;
         gameStart();
     }
@@ -304,14 +308,21 @@ function gameInitialize(){
 function gameOver() {
     gameStatus = false;
     console.log("The game is over")
-    clearInterval(spawnInterval);
-    for (let letter of displayedLetters) {
-        letter.remove();
+    console.log(displayedLetters)
+    //first wave of deleting all the letters, combined with another for loop, working for now
+    for (let i = 0; i < displayedLetters.length; i++){
+        displayedLetters[0].remove();
         displayedLetters.shift();
         console.log("Letter removed")
     }
-    
-    
+    //Second wave of deleting the remaining letters from the screen
+    for (let letter of displayedLetters) { 
+        displayedLetters.pop();
+        letter.remove();
+        console.log("Letter removed")
+    }
+    console.log(displayedLetters)
+    clearInterval(spawnInterval);
     updateHighScores(points)
 }
 

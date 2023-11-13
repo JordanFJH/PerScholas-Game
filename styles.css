@@ -44,7 +44,6 @@ button {
     border-radius: 20px;
 }
 
-/* Might be unnecessary */
 #spawn-area {
     top: 0;
     width: 1px;
@@ -62,15 +61,16 @@ button {
     padding-right: 20px;
 }
 
-.holder {
+/* Info for the score divs*/
+.holder { 
     background-color: white;
     display: flex;
     align-items: center;
     flex-direction: column;
     position: relative;
     width: 200px;
-    height: 200px;
-    border: 1px solid black;
+    height: 175px;
+    border: 8px double black;
     border-radius: 20px;
 }
 #score-info h3 {
@@ -87,11 +87,13 @@ button {
 }
 
 #high-scores-container {
+    font-size: 1.5rem;
+    background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
     position: relative;
+    margin-left: 20px;
     top: 10%;
     border: 1px solid black;
     border-radius: 20px;
@@ -101,6 +103,18 @@ button {
 
 #high-scores-container span {
     color: darkgreen;
+}
+
+#high-scores-container h4 {
+    text-decoration: underline;
+    margin-bottom: 0;
+}
+
+#high-scores-container section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 
@@ -141,7 +155,7 @@ button {
 
 .vaporize {
     animation-name: vaporize;
-    animation-duration: 500ms;
+    animation-duration: 250ms;
 }
 
 @keyframes vaporize {
@@ -153,5 +167,24 @@ button {
     to {
         opacity: 0%;
         background-color: red;
+    }
+}
+
+.fading {
+    animation-name: fade;
+    animation-duration: 200ms;
+    animation-timing-function: linear;
+    animation-iteration-count: 6;
+    animation-direction: alternate;
+}
+
+@keyframes fade {
+    from {
+        opacity: 100%;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0%;
+        transform: scale(2);
     }
 }
