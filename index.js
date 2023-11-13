@@ -231,15 +231,16 @@ function scoredPoint(key) {
 
     let scoringPoints = Math.floor((Math.round(rect.top - rect2.top) / 2));
     
-    playAudio();
+    playExplosion();
     updateScore(scoringPoints);
     updateStreak(true);
     letterRemove(key);
 }
 
-function playAudio () {
+//Plays explosion sound effect for guessing the correct letter
+function playExplosion () {
     // let audio = new Audio("Resources\Audio\Retro_Explosion.wav")
-    let audio = new Audio("../Resources/Audio/Retro_Explosion.wav")
+    let audio = new Audio("../Resources/Audio/Retro_Explosionn.wav")
     audio.play();
 }
 
