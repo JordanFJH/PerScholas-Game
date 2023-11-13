@@ -231,15 +231,33 @@ function scoredPoint(key) {
 
     let scoringPoints = Math.floor((Math.round(rect.top - rect2.top) / 2));
     
+    playAudio();
     updateScore(scoringPoints);
     updateStreak(true);
     letterRemove(key);
 }
 
+function playAudio () {
+    // let audio = new Audio("Resources\Audio\Retro_Explosion.wav")
+    let audio = new Audio("../Resources/Audio/Retro_Explosion.wav")
+    audio.play();
+}
+
 //Removes active letter that was pressed
 function letterRemove(key) {
-    key.remove()
+    let linger = key.getBoundingClientRect();
+    console.log(linger.top);
+    key.remove();
     displayedLetters.shift();
+    // key.style.animationDuration = "100ms";
+    // key.classList.remove("moving-down")
+    // key.classList.remove("moving-down-2")
+    // key.classList.add("explode")
+    // setTimeout(function () {
+    //     key.remove()
+    //     displayedLetters.shift();
+    // }, 100)
+    
 }
 
 //Selecting the random letter to be displayed for the player to press

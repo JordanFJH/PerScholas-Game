@@ -7,6 +7,24 @@ body {
     justify-content: center;
 }
 
+header {
+    display: flex;
+    position: absolute;
+    height: 10%;
+    background-color: darkgoldenrod;
+    width: 100%;
+    justify-content: center;
+}
+
+main {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: 80%;
+    width: 100%;
+    top: 10%;
+}
+
 #play-area {
     background-color: white;
     display: flex;
@@ -14,11 +32,10 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
-    top: 10%;
     border: 1px solid black;
     border-radius: 20px;
     width: 40%;
-    height: 70%;
+    height: 100%;
 }
 
 button {
@@ -56,8 +73,7 @@ button {
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    top: 10%;
-    height: 70%;
+    height: 100%;
     padding-right: 20px;
 }
 
@@ -94,11 +110,10 @@ button {
     align-items: center;
     position: relative;
     margin-left: 20px;
-    top: 10%;
     border: 1px solid black;
     border-radius: 20px;
     width: 15%;
-    height: 70%;
+    height: 100%;
 }
 
 #high-scores-container span {
@@ -114,7 +129,7 @@ button {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 
@@ -183,6 +198,26 @@ button {
 }
 
 @keyframes fade {
+    from {
+        opacity: 100%;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0%;
+        transform: scale(2);
+    }
+}
+
+.explode {
+    position: absolute;
+    left: 0;
+    top: 200px;
+    animation-name: explode;
+    animation-duration: 100ms;
+    animation-timing-function: linear;
+}
+
+@keyframes explode {
     from {
         opacity: 100%;
         transform: scale(1);
