@@ -1,6 +1,5 @@
 //Global Variables
 let letterOptions = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-let specialChars = ["!", "@", "#", "$", "%", "&", "*", "(", ")", "=", "+", "?", ">", "<", ".", ",", ":", ";", "[", "]", "{", "}"]
 let names = ["Stacy", "Casey", "Emily", "Natalie", "Ashley", "Olivia", "Jane"]
 let displayedLetters = []
 let roundOver = false;
@@ -20,7 +19,10 @@ let spawnDelay = Math.floor((letterSpeed * 1000) / 3);
 let streakNumber = 0;
 let newHighScore = false;
 let longestStreak = 0;
-const bgMusic = new Audio("/Resources/Audio/Background_Music.wav")
+const page1 = document.querySelector("#page-1");
+const page2 = document.querySelector("#page-2");
+const page3 = document.querySelector("#page-3");
+const bgMusic = new Audio("/Resources/Audio/Background_Music.wav");
 const highScores = document.querySelectorAll("#high-scores-container span");
 const roundEl = document.querySelector("#round-holder h4");
 const streakNumberEl = document.querySelector("#streak-number");
@@ -37,6 +39,22 @@ const restartButton = document.querySelector("#restart");
 
 //Constantly checking the window to see if there's a miss
 // const missInterval = setInterval(checkMiss, 50);
+
+page1.addEventListener("click", function (evt) {
+    console.log(evt);
+    page1.style.zIndex = "-21";
+})
+
+page2.addEventListener("click", function (evt) {
+    console.log(evt);
+    page2.style.zIndex = "-22";
+})
+
+page3.addEventListener("click", function (evt) {
+    console.log(evt);
+    page3.style.zIndex = "-23";
+})
+
 
 
 
@@ -271,6 +289,9 @@ function roundContinue() {
         console.log("Get ready for the next round");
         adjustSpeed(); //Makes the letters and spawn delay faster
         sleep(1500); // Pauses the games between rounds
+        if (roundNumber === 7) {
+            addBookPictures();
+        }
         playNextlevel();
         iterations = 0;
         roundAnimate();
@@ -347,6 +368,18 @@ function randomLetter() {
     return chosenChar;
 }
 
+//Adds the additional book pictures after round 6
+function addBookPictures() {
+    let pic1 = document.createElement("img");
+    let pic2 = document.createElement("img");
+    pic1.src = "/Resources/Images/book.png"
+    pic1.classList.add("book-2");
+    playArea.appendChild(pic1)
+    pic2.src = "/Resources/Images/book.png"
+    pic2.classList.add("book-3");
+    playArea.appendChild(pic2)
+}
+
 //Updates the score with the active streak bonus
 function updateScore(pointstoAdd) {
     points += (streakNumber * 10) + pointstoAdd;
@@ -389,6 +422,14 @@ function gameInitialize(){
     missInterval = setInterval(checkMiss, missDelay);
     console.log("Good Luck!")
     makeLives();
+    //Removes the added book pictures if round was greater than six in previous round
+    if (roundNumber > 6) {
+        console.log("Round number was greater than 6");
+        for (let i = 0; i <= 2; i++) {
+            let deleteMe = document.querySelector("#play-area img:last-child");
+            deleteMe.remove();
+        }
+    }
     roundNumber = 1;
     roundEl.innerText = roundNumber;
     iterations = 0;
