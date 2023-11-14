@@ -10,16 +10,25 @@ body {
 }
 
 header {
+    color: yellow;
+    font-weight: bold;
+    font-size: 1.5rem;
     display: flex;
     position: absolute;
     height: 10%;
     background-color: darkgoldenrod;
+    background-image: url("/Resources/Images/Header_Background.jpg");
+    background-size: contain;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     width: 100%;
     justify-content: center;
+    align-items: center;
 }
 
 main {
-    background-image: url("../Resources/Images/Web-Background.jpg");
+    background-image: url("../Resources/Images/Web_Background_2.jpg");
+    background-size: contain;
     background-size: cover;
     position: relative;
     display: flex;
@@ -27,6 +36,19 @@ main {
     height: 90%;
     width: 100%;
     top: 10%;
+}
+#start-screen {
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
 }
 
 #play-area {
@@ -51,9 +73,24 @@ main {
     position: absolute;
     border: 1px solid black;
     border-radius: 20px;
-    width: 40%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     z-index: -10;
+}
+
+#end-screen p {
+    display: inline;
+}
+
+#restart {
+    font-weight: bold;
+    transform: scale(2);
+    border: 1px solid pink;
+    border-radius: 10px;
+}
+
+#restart :hover{
+    background-color: yellow;
 }
 
 button {
@@ -73,6 +110,8 @@ button {
 
 #bounds div {
     background-color: green;
+    background-image: url("../Resources/Images/Brain_Pattern.jpg");
+    background-size: cover;
     height: 100%;
     width: 33%;
     border: 1px solid black;

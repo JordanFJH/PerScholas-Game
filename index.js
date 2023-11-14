@@ -1,6 +1,7 @@
 //Global Variables
 let letterOptions = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 let specialChars = ["!", "@", "#", "$", "%", "&", "*", "(", ")", "=", "+", "?", ">", "<", ".", ",", ":", ";", "[", "]", "{", "}"]
+let names = ["Tyler", "Jason", "Emily", "Natalie", "Ashley", "Kantavius", "Paul"]
 let displayedLetters = []
 let roundOver = false;
 let gameStatus = true;
@@ -17,6 +18,9 @@ let missInterval;
 let spawnInterval;
 let spawnDelay = Math.floor((letterSpeed * 1000) / 3);
 let streakNumber = 0;
+let newHighScore = false;
+let longestStreak = 0;
+const bgMusic = new Audio("/Resources/Audio/Background_Music.wav")
 const highScores = document.querySelectorAll("#high-scores-container span");
 const roundEl = document.querySelector("#round-holder h4");
 const streakNumberEl = document.querySelector("#streak-number");
@@ -27,7 +31,9 @@ const bounds = document.querySelector("#bounds");
 let playArea = document.querySelector("#play-area")
 let scoreDisplay = document.querySelector("#score-display");
 const spawnArea = document.querySelector("#spawn-area");
+const startScreen = document.querySelector("#start-screen")
 const endScreen = document.querySelector("#end-screen");
+const restartButton = document.querySelector("#restart");
 
 //Constantly checking the window to see if there's a miss
 // const missInterval = setInterval(checkMiss, 50);
@@ -36,11 +42,23 @@ const endScreen = document.querySelector("#end-screen");
 
 //start button to start the game
 startButton.addEventListener("click", function (evt) {
+    bgMusic.play();
     gameInitialize();
     gameStart();
     
 })
 
+restartButton.addEventListener("click", function(evt){
+    if (newHighScore) {
+        let oldScore = document.querySelector("#end-screen h2:last-child")
+        oldScore.remove();
+    }
+    endScreen.style.zIndex = "-10";
+    bgMusic.currentTime = 0;
+    bgMusic.play();
+    gameInitialize();
+    gameStart();
+})
 
 
 //Event listener for player pressing the key and matching it to the correct letter
@@ -111,7 +129,7 @@ function gameStart() {
 // Controls the iterations of number of letters displayed each roound
 function theCaller() {
     iterations++
-    if (iterations < 5) {
+    if (iterations <= 5) {
         letterCreator();
     } else {
         clearInterval(spawnInterval);
@@ -338,6 +356,9 @@ function updateScore(pointstoAdd) {
 //Updates the active streak number depending on if player hits, misses, or gusess wrong letter
 function updateStreak (bool) {
     bool === true ? streakNumber++ : streakNumber = 0;
+    if (streakNumber > longestStreak) {
+        longestStreak = streakNumber;
+    }
     streakNumberEl.innerText = streakNumber;
 }
 
@@ -355,6 +376,7 @@ function updateHighScores(userPoints) {
     let newLow = userPoints;
     for (let i = 0; i < highScores.length; i++){
         if (newLow > highScores[i].innerText){
+            newHighScore = true;
             lowest = highScores[i].innerText;
             highScores[i].innerText = newLow;
             newLow = lowest;
@@ -370,16 +392,18 @@ function gameInitialize(){
     roundEl.innerText = roundNumber;
     iterations = 0;
     points = 0;
+    newHighScore = false;
     scoreRef.innerText = 0;
     missCount = 0;
     letterSpeed = 3;
-    spawnDelay = Math.floor((letterSpeed * 1000) / 3);
+    spawnDelay = Math.floor((letterSpeed * 1000) / 4);
     gameStatus = true;
 }
 
 
 //The game over function for when the game is over
 function gameOver() {
+    bgMusic.pause();
     gameStatus = false;
     console.log("The game is over")
     //first wave of deleting all the letters, combined with another for loop, working for now
@@ -396,8 +420,31 @@ function gameOver() {
     }
     clearInterval(spawnInterval);
     updateHighScores(points)
+    displayEndScreen();
 }
 
+//displays end screen and all relative info
+function displayEndScreen() {
+    endScreen.style.zIndex = "10";
+    let longStreak = document.querySelector("#end-screen p");
+    longStreak.innerText = longestStreak;
+    if (newHighScore) {
+        let showHigh = document.createElement("h2");
+        showHigh.innerText = "Congrats on a new score on the leaderboard!"
+        endScreen.appendChild(showHigh);
+    }
+}
+
+
+
+
+/* 
+Tomorrow I can make the green life visualizers the brain and the player an employee
+of a company that helps kids procrastinate.  The brains can symbolize concentration.
+Might need to put the end screen inside the play area so they can
+share the same stats and configuration
+
+*/
 
 
 //TRASH
