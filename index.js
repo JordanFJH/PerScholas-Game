@@ -264,9 +264,12 @@ function checkMiss() {
 
 //Deletes a visual of the life when the player doesn't hit a letter in time
 function loseLife() {
+    let audioList = ["/Resources/Audio/Exams.wav", "/Resources/Audio/HomeWork.wav", "/Resources/Audio/Rough_Draft.wav", "/Resources/Audio/Study.wav", "/Resources/Audio/Syllabus.wav", "/Resources/Audio/Thesis.wav", ]
+    let randNum;
+    randNum = Math.floor(Math.random() * audioList.length);
     let lastLife = document.querySelector("#bounds :last-child");
     lastLife.classList.add("vaporize");
-    let audio = new Audio ("../Resources/Audio/Life_Lost.wav")
+    let audio = new Audio (audioList[randNum]);
     audio.play();
     setTimeout(function () {
         lastLife.remove();
@@ -489,11 +492,10 @@ function displayEndScreen() {
 
 
 /* 
-Tomorrow I can make the green life visualizers the brain and the player an employee
-of a company that helps kids procrastinate.  The brains can symbolize concentration.
-Might need to put the end screen inside the play area so they can
-share the same stats and configuration
-
+Adjust audio for the lose life sounds and create a start page comic
+Might just make it a one page thing explaining the story, really don't feel
+like doing a lot of talking with my shitty mic
+and I hate the sound of my voice
 */
 
 
