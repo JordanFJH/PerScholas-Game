@@ -1,7 +1,7 @@
 //Global Variables
 let letterOptions = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 let specialChars = ["!", "@", "#", "$", "%", "&", "*", "(", ")", "=", "+", "?", ">", "<", ".", ",", ":", ";", "[", "]", "{", "}"]
-let names = ["Tyler", "Jason", "Emily", "Natalie", "Ashley", "Kantavius", "Paul"]
+let names = ["Stacy", "Casey", "Emily", "Natalie", "Ashley", "Olivia", "Jane"]
 let displayedLetters = []
 let roundOver = false;
 let gameStatus = true;
@@ -42,6 +42,7 @@ const restartButton = document.querySelector("#restart");
 
 //start button to start the game
 startButton.addEventListener("click", function (evt) {
+    startScreen.style.zIndex = "-20";
     bgMusic.play();
     gameInitialize();
     gameStart();
@@ -404,6 +405,9 @@ function gameInitialize(){
 //The game over function for when the game is over
 function gameOver() {
     bgMusic.pause();
+    //Plays game over sound
+    let audio = new Audio("Resources/Audio/Game_Over_Sound.wav")
+    audio.play();
     gameStatus = false;
     console.log("The game is over")
     //first wave of deleting all the letters, combined with another for loop, working for now
@@ -426,8 +430,13 @@ function gameOver() {
 //displays end screen and all relative info
 function displayEndScreen() {
     endScreen.style.zIndex = "10";
+    let randNum = (Math.floor(Math.random() * names.length))
+    let displayName = names[randNum];
+    let kidName = document.querySelector("#student-name")
     let longStreak = document.querySelector("#end-screen p");
+    kidName.innerText = `You've helped little ${displayName} procrstinate long enough.`
     longStreak.innerText = longestStreak;
+    //Adds the newhighscore message if player gets new highscore
     if (newHighScore) {
         let showHigh = document.createElement("h2");
         showHigh.innerText = "Congrats on a new score on the leaderboard!"
