@@ -38,8 +38,6 @@ const restartButton = document.querySelector("#restart");
 
 
 
-
-
 page1.addEventListener("click", function (evt) {
     console.log(evt);
     page1.style.zIndex = "-21";
@@ -246,6 +244,7 @@ function checkMiss() {
 
 //Deletes a visual of the life when the player doesn't hit a letter in time
 function loseLife() {
+    //Selects random audio when the player misses a letter
     let audioList = ["Resources/Audio/Exams.mp3", "Resources/Audio/HomeWork.mp3", "Resources/Audio/Rough_Draft.mp3", "Resources/Audio/Study.mp3", "Resources/Audio/Syllabus.mp3", "Resources/Audio/Thesis.mp3", ]
     let randNum;
     randNum = Math.floor(Math.random() * audioList.length);
@@ -285,6 +284,7 @@ function roundContinue() {
     
 }
 
+//Plays the animation of the round number bouncing
 function roundAnimate () {
     roundEl.style.animationPlayState = "running";
     setTimeout(function () {
@@ -320,19 +320,10 @@ function playNextlevel() {
 
 //Removes active letter that was pressed
 function letterRemove(key) {
-    let linger = key.getBoundingClientRect();
-    console.log(linger.top);
+    // let linger = key.getBoundingClientRect();
+    // console.log(linger.top);
     key.remove();
     displayedLetters.shift();
-    // key.style.animationDuration = "100ms";
-    // key.classList.remove("moving-down")
-    // key.classList.remove("moving-down-2")
-    // key.classList.add("explode")
-    // setTimeout(function () {
-    //     key.remove()
-    //     displayedLetters.shift();
-    // }, 100)
-    
 }
 
 //Selecting the random letter to be displayed for the player to press

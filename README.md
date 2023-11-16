@@ -1,13 +1,19 @@
 # PerScholas-Game
-Procaster Master, a web game developed using CSS, HTML, and Javascript for the Project 1 of PerScholas
 
-MOTIVATION
-    - To demonstrate talents and understading of topics covered so far in program
+# Name
+Procraster Master
 
-BUILD STATUS
-    - 1.0
+# Description
+Demostrating and displaying knowledge of HTML, CSS, and JavaScript skills learned by making a web based game
 
-Built with Visual Studio
+# Tech Used
+VScode
 
-INSTALLATION
-    - Run in your internet browser of choice
+# How to play
+visit jordanfjh.github.io/Perscholas-game to play
+
+# Version
+1.0
+
+# License
+Product of Jordan Co. Inc. LLC
