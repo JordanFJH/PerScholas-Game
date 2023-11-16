@@ -325,7 +325,7 @@ function playExplosion () {
 
 //Plays next level sound for player making it to the next level
 function playNextlevel() {
-    let audio = new Audio("Resources/Audio/Next_level.mp3");
+    let audio = new Audio("Resources/Audio/Next_Level.mp3");
     audio.play();
 }
 
