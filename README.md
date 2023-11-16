@@ -9,6 +9,10 @@ Demostrating and displaying knowledge of HTML, CSS, and JavaScript skills learne
 # Tech Used
 VScode
 
+# Support
+If you come across a bug, error, or problem email me at higgsfj@gmail.com with the issue
+(Note: I can't gurantee a timely response if any response at all, this does not gurantee the issue with game will be resolved)
+
 # How to play
 visit jordanfjh.github.io/Perscholas-game to play
 

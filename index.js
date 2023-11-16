@@ -128,7 +128,7 @@ function gameStart() {
 // Controls the iterations of number of letters displayed each round
 function theCaller() {
     iterations++
-    if (iterations <= 5) {
+    if (iterations <= 8) {
         letterCreator();
     } else {
         clearInterval(spawnInterval);
@@ -270,7 +270,6 @@ function roundContinue() {
     if (gameStatus) {
         roundNumber++;
         roundEl.innerText = roundNumber;
-        console.log("Get ready for the next round");
         adjustSpeed(); //Makes the letters and spawn delay faster
         sleep(1500); // Pauses the games between rounds
         if (roundNumber === 7) {
@@ -379,6 +378,7 @@ function updateStreak (bool) {
     streakNumberEl.innerText = streakNumber;
 }
 
+// Converts the letterspeed into a string to be read by the css file
 function convertingLetterSpeed(number) {
     return number + "s";
 }
@@ -401,17 +401,16 @@ function updateHighScores(userPoints) {
     }
 }
 
+//Sets all the variables to their base for the start of the game
 function gameInitialize(){
     missInterval = setInterval(checkMiss, missDelay);
-    console.log("Good Luck!")
     makeLives();
     //Removes the added book pictures if round was greater than six in previous round
     if (roundNumber > 6) {
-        console.log("Round number was greater than 6");
-        for (let i = 0; i <= 2; i++) {
-            let deleteMe = document.querySelector("#play-area img:last-child");
-            deleteMe.remove();
-        }
+        let deleteMe1 = document.querySelector(".book-2");
+        let deleteMe2 = document.querySelector(".book-3");
+        deleteMe1.remove();
+        deleteMe2.remove();
     }
     roundNumber = 1;
     roundEl.innerText = roundNumber;
@@ -440,7 +439,7 @@ function gameOver() {
         displayedLetters.shift();
         console.log("Letter removed")
     }
-    //Second wave of deleting the remaining letters from the screen
+    //Second wave of deleting the remaining letters from the screen since I need 2 apparently
     for (let letter of displayedLetters) { 
         displayedLetters.pop();
         letter.remove();
@@ -467,82 +466,3 @@ function displayEndScreen() {
         endScreen.appendChild(showHigh);
     }
 }
-
-
-
-
-/* 
-Adjust audio for the lose life sounds and create a start page comic
-Might just make it a one page thing explaining the story, really don't feel
-like doing a lot of talking with my shitty mic
-and I hate the sound of my voice
-*/
-
-
-//TRASH
-
-
-
-// class Letter {
-//     constructor(letter) {
-//         this.letter = randomLetter();
-//     }
-//     move() {
-//         spot += .2;
-//         spotter = spot + "%";
-//         this.style.top = spotter;
-//         if (spot < 100) {
-//             requestAnimationFrame(move);
-//         }
-//         else {
-//             thing.remove();
-//         }
-//     }
-// }
-
-
-
-
-
-
-//request Animation Frame method of animating the letters
-
-// function letterMove(timeStamp){
-//     let thing = spawnArea.children[0];
-//     spot += .2;
-//     spotter = spot + "%";
-//     thing.style.top = spotter;
-//     if (spot < 100) {
-//         requestAnimationFrame(letterMove);
-//     }
-//     else {
-//         thing.remove();
-//     }
-
-// }
-// requestAnimationFrame(letterMove);
-
-
-
-// function roundContinue() {
-//     let answer = prompt("Would you like to coninue?").toLowerCase();
-//     if (answer === "y"){
-//         iterations = 0;
-//         letterSpeed += difficulty;
-//         spawnDelay += (difficulty * 200);
-//         console.log("Current difficulty is " + difficulty);
-//         daGame();
-//     }else {
-//         return;
-//     }
-// }
-
-
-
-
-
-//Need to have every letter move down in intervals that get gradually faster
-//The letters are going to be in an array
-//Set interval for position
-//Looping for positon of the element
-//Display none for the position

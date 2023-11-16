@@ -164,7 +164,7 @@ button:hover {
 }
 
 #bounds div {
-    background-color: green;
+    /* background-color: green; */
     background-image: url("Resources/Images/Brain_Pattern.png");
     background-size: cover;
     height: 100%;
