@@ -21,7 +21,7 @@ let newHighScore = false;
 let longestStreak = 0;
 const page1 = document.querySelector("#page-1");
 const page2 = document.querySelector("#page-2");
-const bgMusic = new Audio("/Resources/Audio/Background_Music.wav");
+const bgMusic = new Audio("Resources/Audio/Background_Music.wav");
 const highScores = document.querySelectorAll("#high-scores-container span");
 const roundEl = document.querySelector("#round-holder h4");
 const streakNumberEl = document.querySelector("#streak-number");
@@ -257,7 +257,7 @@ function checkMiss() {
 
 //Deletes a visual of the life when the player doesn't hit a letter in time
 function loseLife() {
-    let audioList = ["/Resources/Audio/Exams.wav", "/Resources/Audio/HomeWork.wav", "/Resources/Audio/Rough_Draft.wav", "/Resources/Audio/Study.wav", "/Resources/Audio/Syllabus.wav", "/Resources/Audio/Thesis.wav", ]
+    let audioList = ["Resources/Audio/Exams.wav", "Resources/Audio/HomeWork.wav", "Resources/Audio/Rough_Draft.wav", "Resources/Audio/Study.wav", "Resources/Audio/Syllabus.wav", "Resources/Audio/Thesis.wav", ]
     let randNum;
     randNum = Math.floor(Math.random() * audioList.length);
     let lastLife = document.querySelector("#bounds :last-child");
@@ -319,13 +319,13 @@ function scoredPoint(key) {
 
 //Plays explosion sound effect for guessing the correct letter
 function playExplosion () {
-    let audio = new Audio("../Resources/Audio/Retro_Explosionn.wav")
+    let audio = new Audio("Resources/Audio/Retro_Explosionn.wav")
     audio.play();
 }
 
 //Plays next level sound for player making it to the next level
 function playNextlevel() {
-    let audio = new Audio("../Resources/Audio/Next_level.wav");
+    let audio = new Audio("Resources/Audio/Next_level.wav");
     audio.play();
 }
 
@@ -368,10 +368,10 @@ function randomLetter() {
 function addBookPictures() {
     let pic1 = document.createElement("img");
     let pic2 = document.createElement("img");
-    pic1.src = "/Resources/Images/book.png"
+    pic1.src = "Resources/Images/book.png"
     pic1.classList.add("book-2");
     playArea.appendChild(pic1)
-    pic2.src = "/Resources/Images/book.png"
+    pic2.src = "Resources/Images/book.png"
     pic2.classList.add("book-3");
     playArea.appendChild(pic2)
 }

@@ -62,7 +62,7 @@ header {
     position: absolute;
     height: 10%;
     background-color: darkgoldenrod;
-    background-image: url("/Resources/Images/Header_Background.jpg");
+    background-image: url("Resources/Images/Header_Background.jpg");
     background-size: contain;
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -72,7 +72,7 @@ header {
 }
 
 main {
-    background-image: url("../Resources/Images/Web_Background_2.jpg");
+    background-image: url("Resources/Images/Web_Background_2.jpg");
     background-size: contain;
     background-size: cover;
     position: relative;
@@ -117,7 +117,6 @@ main {
 
 #end-screen {
     background-color: brown;
-    /* background-image: url("/Resources/Images/angry-student.jpg"); */
     background-size: contain;
     background-size: cover;
     display: flex;
@@ -166,7 +165,7 @@ button:hover {
 
 #bounds div {
     background-color: green;
-    background-image: url("../Resources/Images/Brain_Pattern.jpg");
+    background-image: url("Resources/Images/Brain_Pattern.jpg");
     background-size: cover;
     height: 100%;
     width: 33%;
