@@ -15,6 +15,8 @@ If you come across a bug, error, or problem email me at higgsfj@gmail.com with t
 
 # How to play
 visit jordanfjh.github.io/Perscholas-game to play
+...or just click the link below
+https://jordanfjh.github.io/PerScholas-Game/
 
 # Version
 1.0
