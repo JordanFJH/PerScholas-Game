@@ -16,17 +16,42 @@ body {
 
 #page-1 {
     z-index: 20;
-    background-color: purple;
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+#page-1 img {
+    height: 75%;
+    animation: fade-in 2s;
 }
 
 #page-2 {
     z-index: 19;
-    background-color: yellow;
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#page-3 {
-    z-index: 18;
-    background-color: sandybrown;
+#page-2 section {
+    background-color: lightgray;
+    padding: 20px;
+    border: 15px double green;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    font-size: 1.7rem;
+}
+
+#page-2 section p {
+    margin: 15px;
 }
 
 header {
@@ -73,8 +98,7 @@ main {
 
 #start-screen p {
     font-weight: bold;
-    font-size: 1.2rem;
-    margin-bottom: .5em;
+    font-size: 1.5rem;
 
 }
 
@@ -117,17 +141,6 @@ main {
     height: 25%;
 }
 
-#restart {
-    font-weight: bold;
-    transform: scale(2);
-    border: 1px solid pink;
-    border-radius: 10px;
-}
-
-#restart :hover{
-    background-color: yellow;
-}
-
 button {
     transform: scale(1.5);
     background-color: white;
@@ -137,6 +150,7 @@ button {
 
 button:hover {
     background-color: yellow;
+    transform: scale(2.0);
 }
 
 #bounds {
@@ -375,5 +389,23 @@ button:hover {
     to {
         opacity: 0%;
         transform: scale(2);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0%;
+    }
+    to {
+        opacity: 100%;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 100%;
+    }
+    to {
+        opacity: 0%;
     }
 }

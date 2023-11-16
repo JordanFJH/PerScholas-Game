@@ -21,12 +21,11 @@ let newHighScore = false;
 let longestStreak = 0;
 const page1 = document.querySelector("#page-1");
 const page2 = document.querySelector("#page-2");
-const page3 = document.querySelector("#page-3");
 const bgMusic = new Audio("/Resources/Audio/Background_Music.wav");
 const highScores = document.querySelectorAll("#high-scores-container span");
 const roundEl = document.querySelector("#round-holder h4");
 const streakNumberEl = document.querySelector("#streak-number");
-const startButton = document.querySelector("button");
+const startButton = document.querySelector("#start-button");
 const scoreRef = document.querySelector("#score");
 const body = document.querySelector("body");
 const bounds = document.querySelector("#bounds");
@@ -49,12 +48,6 @@ page2.addEventListener("click", function (evt) {
     console.log(evt);
     page2.style.zIndex = "-22";
 })
-
-page3.addEventListener("click", function (evt) {
-    console.log(evt);
-    page3.style.zIndex = "-23";
-})
-
 
 
 
