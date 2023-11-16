@@ -4,21 +4,21 @@ let names = ["Stacy", "Casey", "Emily", "Natalie", "Ashley", "Olivia", "Jane"]
 let displayedLetters = []
 let roundOver = false;
 let gameStatus = true;
-let difficulty = -.5;
 let missCount;
 let missDelay = 30;
 let deleteSpeed = 0;
 let iterations;
 let count = 0;
 let points;
-let roundNumber;
+let roundNumber; //Round Number the player is on
 let letterSpeed;
-let missInterval;
+let missInterval; //Holds the set interval for the miss count
 let spawnInterval;
 let spawnDelay = Math.floor((letterSpeed * 1000) / 3);
 let streakNumber = 0;
-let newHighScore = false;
+let newHighScore = false; //Boolean to check if there's a new highscore
 let longestStreak = 0;
+//Global DOM Variables
 const page1 = document.querySelector("#page-1");
 const page2 = document.querySelector("#page-2");
 const bgMusic = new Audio("Resources/Audio/Background_Music.mp3");
@@ -36,8 +36,9 @@ const startScreen = document.querySelector("#start-screen")
 const endScreen = document.querySelector("#end-screen");
 const restartButton = document.querySelector("#restart");
 
-//Constantly checking the window to see if there's a miss
-// const missInterval = setInterval(checkMiss, 50);
+
+
+
 
 page1.addEventListener("click", function (evt) {
     console.log(evt);
@@ -60,13 +61,14 @@ startButton.addEventListener("click", function (evt) {
     
 })
 
+//The button for restarting the game from the end screen
 restartButton.addEventListener("click", function(evt){
     if (newHighScore) {
         let oldScore = document.querySelector("#end-screen h2:last-child")
         oldScore.remove();
     }
     endScreen.style.zIndex = "-10";
-    bgMusic.currentTime = 0;
+    bgMusic.currentTime = 0; //Resets the music
     bgMusic.play();
     gameInitialize();
     gameStart();
@@ -88,24 +90,27 @@ window.addEventListener("keypress", function (evt) {
 })
 
 
+/*
+********************************************
+* 
+*FUNCTIONS
+*
+********************************************
+*/
+
 //Spawning the letter
 function letterCreator() {
     let letter = document.createElement("span")
     letter.innerText = randomLetter();
     letter.classList.add(chooseClass());
     letter.style.animationDuration = convertingLetterSpeed(letterSpeed);
+    chooseLetterColor(letter);
     spawnArea.appendChild(letter);
     displayedLetters.push(letter);
     count++;
     console.log(`Number count:  ${count}`);
 
 }
-// letterCreator();
-// const interval = setInterval(letterCreator, 1000);
-// clearInterval(interval);
-
-
-// const interval = setInterval(theCaller, 1000)
 
 
 //Function to start the entire game
@@ -122,23 +127,7 @@ function gameStart() {
 }
 
 
-
-/*
-********************************************
-* 
-*FUNCTIONS
-*
-********************************************
-*/
-// let time = new Date().getTime();
-// console.log(time);
-
-// console.log("Hello World")
-// sleep(2000);
-// console.log("Adios")
-
-
-// Controls the iterations of number of letters displayed each roound
+// Controls the iterations of number of letters displayed each round
 function theCaller() {
     iterations++
     if (iterations <= 5) {
@@ -152,7 +141,7 @@ function theCaller() {
 
 
 
-//Adjusts the speed of each round
+//Adjusts the speed of each round called in roundcontinue
 function adjustSpeed() {
     letterSpeed = (letterSpeed - .15).toFixed(2);
     spawnDelay = Math.floor((letterSpeed * 1000) / 4);
@@ -181,7 +170,7 @@ function delaySpeed() {
     }
 }
 
-//Chooses the random class that effects the difficulty of the letter going down
+//Chooses the random class that effects the difficulty of the letter going down depending on what round the player is on
 function chooseClass() {
     let chosenClass = "";
     if (roundNumber <= 6) { //Adds seperate class of moving side to increase difficulty after certain round
@@ -199,7 +188,7 @@ function chooseClass() {
                 chosenClass = "moving-down-2-2";
                 break;
             default:
-                console.log("something went wrong in chooseClass");
+                console.log("something went wrong in chooseClass function");
                 break;
         }
     } else {
@@ -212,13 +201,13 @@ function chooseClass() {
                 chosenClass = "moving-down-2";
                 break;
             case 2:
-                chosenClass = "moving-down-2";
+                chosenClass = "moving-down-2-2";
                 break;
             case 3:
                 chosenClass = "moving-down-3";
                 break;
             default:
-                console.log("something went wrong in chooseClass");
+                console.log("something went wrong in chooseClass function");
                 break;
         }
     }
@@ -362,6 +351,13 @@ function randomLetter() {
         randomNum === 1 ? chosenChar = pickedChar : chosenChar = pickedChar.toUpperCase();
     }
     return chosenChar;
+}
+
+//Changes letter color if it's capatalized to be easier to see
+function chooseLetterColor(letter) {
+    if (!(letterOptions.includes(letter.innerText))) {
+        letter.style.color = "darkblue";
+    }
 }
 
 //Adds the additional book pictures after round 6
