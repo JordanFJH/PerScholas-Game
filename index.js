@@ -21,7 +21,7 @@ let newHighScore = false;
 let longestStreak = 0;
 const page1 = document.querySelector("#page-1");
 const page2 = document.querySelector("#page-2");
-const bgMusic = new Audio("Resources/Audio/Background_Music.wav");
+const bgMusic = new Audio("Resources/Audio/Background_Music.mp3");
 const highScores = document.querySelectorAll("#high-scores-container span");
 const roundEl = document.querySelector("#round-holder h4");
 const streakNumberEl = document.querySelector("#streak-number");
@@ -257,7 +257,7 @@ function checkMiss() {
 
 //Deletes a visual of the life when the player doesn't hit a letter in time
 function loseLife() {
-    let audioList = ["Resources/Audio/Exams.wav", "Resources/Audio/HomeWork.wav", "Resources/Audio/Rough_Draft.wav", "Resources/Audio/Study.wav", "Resources/Audio/Syllabus.wav", "Resources/Audio/Thesis.wav", ]
+    let audioList = ["Resources/Audio/Exams.mp3", "Resources/Audio/HomeWork.mp3", "Resources/Audio/Rough_Draft.mp3", "Resources/Audio/Study.mp3", "Resources/Audio/Syllabus.mp3", "Resources/Audio/Thesis.mp3", ]
     let randNum;
     randNum = Math.floor(Math.random() * audioList.length);
     let lastLife = document.querySelector("#bounds :last-child");
@@ -319,13 +319,13 @@ function scoredPoint(key) {
 
 //Plays explosion sound effect for guessing the correct letter
 function playExplosion () {
-    let audio = new Audio("Resources/Audio/Retro_Explosionn.wav")
+    let audio = new Audio("Resources/Audio/Retro_Explosionn.mp3")
     audio.play();
 }
 
 //Plays next level sound for player making it to the next level
 function playNextlevel() {
-    let audio = new Audio("Resources/Audio/Next_level.wav");
+    let audio = new Audio("Resources/Audio/Next_level.mp3");
     audio.play();
 }
 
@@ -443,7 +443,7 @@ function gameInitialize(){
 function gameOver() {
     bgMusic.pause();
     //Plays game over sound
-    let audio = new Audio("Resources/Audio/Game_Over_Sound.wav")
+    let audio = new Audio("Resources/Audio/Game_Over_Sound.mp3")
     audio.play();
     gameStatus = false;
     console.log("The game is over")
