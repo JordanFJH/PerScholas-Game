@@ -415,6 +415,7 @@ function gameInitialize(){
     roundNumber = 1;
     roundEl.innerText = roundNumber;
     iterations = 0;
+    longestStreak = 0;
     points = 0;
     newHighScore = false;
     scoreRef.innerText = 0;
